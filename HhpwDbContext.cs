@@ -52,6 +52,12 @@ namespace HHPWServer
                 new OrderType { Id = 1, Name = "In-Person"},
                 new OrderType { Id = 2, Name = "Phone"}
             });
+
+            modelBuilder.Entity<OrderItem>().HasData(new OrderItem[]
+            {
+                new OrderItem { Id = 1, OrderId = 1, ItemId = 1},
+                new OrderItem { Id = 2, OrderId = 1, ItemId = 2}
+            });
         }
     }
 }
