@@ -29,6 +29,11 @@ namespace HHPWServer.Controllers
             app.MapDelete("/orders/{id}", (HhpwDbContext db, int id) =>
             {
                 var singleOrder = db.Orders.SingleOrDefault(o => o.Id == id);
+                var orderItems = db.OrderItems.Where(x => x.OrderId == id).ToList();
+                foreach(var item in orderItems)
+                {
+                    db.OrderItems.Remove(item);
+                }
                 if (singleOrder == null)
                 {
                     return Results.NotFound();
@@ -51,6 +56,27 @@ namespace HHPWServer.Controllers
                 db.Orders.Add(newOrder);
                 db.SaveChanges();
                 return Results.Created($"/orders/{newOrder.Id}", newOrder);
+            });
+
+            app.MapPut("/orders/{id}", (HhpwDbContext db, CreateOrderDto dto, int id) =>
+            {
+                var orderToUpdate = db.Orders.FirstOrDefault(x => x.Id == id);
+                if (orderToUpdate == null)
+                {
+                    return Results.NotFound();
+                }
+                orderToUpdate.Name = dto.Name;
+                orderToUpdate.PhoneNumber = dto.PhoneNumber;
+                orderToUpdate.Email = dto.Email;
+                orderToUpdate.OrderType = dto.OrderType;
+
+                db.SaveChanges();
+                return Results.NoContent();
+            });
+
+            app.MapPut("/orders/{id}/closeOrder", (HhpwDbContext db, int id, CloseOrderDto dto) =>
+            {
+
             });
         }
     }

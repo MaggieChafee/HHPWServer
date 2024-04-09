@@ -28,6 +28,18 @@ namespace HHPWServer.Controllers
                 db.SaveChanges();
                 return Results.Ok("Item successfully added to Order.");
             });
+
+            app.MapDelete("/orders/deleteItem/{orderItemId}", (HhpwDbContext db, int orderItemId) =>
+            {
+                var orderItemToDelete = db.OrderItems.FirstOrDefault(x => x.Id ==  orderItemId);
+                if (orderItemToDelete == null) 
+                {
+                    return Results.NotFound();
+                }
+                db.OrderItems.Remove(orderItemToDelete);
+                db.SaveChanges();
+                return Results.Ok("Item deleted");
+            });
         }
     }
 }

@@ -38,5 +38,8 @@ app.UseHttpsRedirection();
 UserApi.Map(app);
 OrderApi.Map(app);
 ItemApi.Map(app);
+OrderTypeApi.Map(app);
+PaymentTypeApi.Map(app);
+RevenueApi.Map(app);
 
 app.Run();

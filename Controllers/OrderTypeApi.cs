@@ -1,13 +1,13 @@
 ﻿using HHPWServer.Models;
 namespace HHPWServer.Controllers
 {
-    public class PaymentTypeApi
+    public class OrderTypeApi
     {
         public static void Map(WebApplication app)
         {
-            app.MapGet("/paymentTypes", (HhpwDbContext db) =>
+            app.MapGet("/orderTypes", (HhpwDbContext db) =>
             {
-                return Results.Ok(db.PaymentTypes.ToList());
+                return Results.Ok(db.OrderTypes.ToList());
             });
         }
     }
