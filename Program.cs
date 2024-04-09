@@ -37,5 +37,6 @@ app.UseHttpsRedirection();
 
 UserApi.Map(app);
 OrderApi.Map(app);
+ItemApi.Map(app);
 
 app.Run();

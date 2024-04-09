@@ -3,6 +3,7 @@ using System;
 using HHPWServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HHPWServer.Migrations
 {
     [DbContext(typeof(HhpwDbContext))]
-    partial class HhpwDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240409004636_MoreOrderItems")]
+    partial class MoreOrderItems
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -171,7 +173,7 @@ namespace HHPWServer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("OrderItems");
+                    b.ToTable("OrderItem");
 
                     b.HasData(
                         new

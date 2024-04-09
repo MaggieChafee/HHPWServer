@@ -10,6 +10,7 @@ namespace HHPWServer
         public DbSet<Order>? Orders { get; set; }
         public DbSet<OrderType> OrderTypes { get; set; }
         public DbSet<PaymentType> PaymentTypes { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
 
         public HhpwDbContext(DbContextOptions<HhpwDbContext> context) : base(context)
         {
@@ -56,7 +57,8 @@ namespace HHPWServer
             modelBuilder.Entity<OrderItem>().HasData(new OrderItem[]
             {
                 new OrderItem { Id = 1, OrderId = 1, ItemId = 1},
-                new OrderItem { Id = 2, OrderId = 1, ItemId = 2}
+                new OrderItem { Id = 2, OrderId = 1, ItemId = 2},
+                new OrderItem { Id = 3, OrderId = 2, ItemId = 3}
             });
         }
     }
