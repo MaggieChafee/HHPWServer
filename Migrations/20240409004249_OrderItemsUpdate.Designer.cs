@@ -3,6 +3,7 @@ using System;
 using HHPWServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HHPWServer.Migrations
 {
     [DbContext(typeof(HhpwDbContext))]
-    partial class HhpwDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240409004249_OrderItemsUpdate")]
+    partial class OrderItemsUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -76,7 +78,7 @@ namespace HHPWServer.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime?>("ClosedOn")
+                    b.Property<DateTime>("ClosedOne")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Email")
@@ -112,6 +114,7 @@ namespace HHPWServer.Migrations
                         new
                         {
                             Id = 1,
+                            ClosedOne = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "le@gmail.com",
                             Name = "Laura Epling",
                             OrderOpen = true,
@@ -122,6 +125,7 @@ namespace HHPWServer.Migrations
                         new
                         {
                             Id = 2,
+                            ClosedOne = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "mm@gmail.com",
                             Name = "Micaela Miller",
                             OrderOpen = true,
@@ -132,6 +136,7 @@ namespace HHPWServer.Migrations
                         new
                         {
                             Id = 3,
+                            ClosedOne = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "nl@gmail.com",
                             Name = "Nik Lizcano",
                             OrderOpen = false,
@@ -142,6 +147,7 @@ namespace HHPWServer.Migrations
                         new
                         {
                             Id = 4,
+                            ClosedOne = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "jp@gmail.com",
                             Name = "Jason Peterson",
                             OrderOpen = true,
@@ -167,11 +173,7 @@ namespace HHPWServer.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ItemId");
-
-                    b.HasIndex("OrderId");
-
-                    b.ToTable("OrderItems");
+                    b.ToTable("OrderItem");
 
                     b.HasData(
                         new
@@ -185,12 +187,6 @@ namespace HHPWServer.Migrations
                             Id = 2,
                             ItemId = 2,
                             OrderId = 1
-                        },
-                        new
-                        {
-                            Id = 3,
-                            ItemId = 3,
-                            OrderId = 2
                         });
                 });
 
@@ -292,25 +288,6 @@ namespace HHPWServer.Migrations
                             Id = 1,
                             Name = "Maggie"
                         });
-                });
-
-            modelBuilder.Entity("HHPWServer.Models.OrderItem", b =>
-                {
-                    b.HasOne("HHPWServer.Models.Item", "Item")
-                        .WithMany()
-                        .HasForeignKey("ItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("HHPWServer.Models.Order", "Order")
-                        .WithMany()
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Item");
-
-                    b.Navigation("Order");
                 });
 #pragma warning restore 612, 618
         }
