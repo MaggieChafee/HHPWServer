@@ -85,18 +85,14 @@ namespace HHPWServer.Controllers
                 }
                 var orderItems = db.OrderItems
                     .Where(x => x.OrderId == id)
-                    .Select(x => x.ItemId)
-                    .ToList();
-                var items = db.Items
-                    .Where(i => orderItems.Contains(i.Id))
-                    .Sum(s => s.ItemPrice);
+                    .Sum(x => x.Item.ItemPrice);
 
                 orderToUpdate.Id = id;
                 orderToUpdate.OrderOpen = false;
                 orderToUpdate.ClosedOn = DateTime.Now;
                 orderToUpdate.TipAmount = dto.TipAmount;
                 orderToUpdate.PaymentType = dto.PaymentType;
-                orderToUpdate.OrderTotal = items;
+                orderToUpdate.OrderTotal = orderItems;
 
                 db.SaveChanges();
                 return Results.Ok("order closed");
@@ -105,14 +101,11 @@ namespace HHPWServer.Controllers
             // get order total 
             app.MapGet("/orders/{orderId}/order-total", (HhpwDbContext db, int orderId) =>
             {
-                var orderItems = db.OrderItems
+                var items = db.OrderItems
                     .Where(x => x.OrderId == orderId)
-                    .Select(x => x.ItemId)
-                    .ToList();
-                var items = db.Items
-                    .Where(i => orderItems.Contains(i.Id))
-                    .Sum(s => s.ItemPrice);
-                if (orderItems == null)
+                    .Sum(x => x.Item.ItemPrice);
+             
+                if (items == 0)
                 {
                     return Results.BadRequest();
                 }

@@ -11,16 +11,14 @@ namespace HHPWServer.Controllers
             {
                 var orderItems = db.OrderItems
                     .Where(x => x.OrderId == orderId)
-                    .Select(x => x.ItemId)
+                    .Select(x => x.Item)
                     .ToList();
-                var items = db.Items
-                    .Where(i => orderItems.Contains(i.Id))
-                    .ToList();
-                if (items == null)
+                
+                if (orderItems == null)
                 {
                     return Results.NotFound();
                 }
-                return Results.Ok(items);
+                return Results.Ok(orderItems);
             });
             // add item to order
             app.MapPost("/add-to-order/{orderId}/item/{itemId}", (HhpwDbContext db, int orderId, int itemId) =>
