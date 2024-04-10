@@ -5,7 +5,7 @@ namespace HHPWServer.Controllers
     {
         public static void Map(WebApplication app)
         {
-            app.MapGet("/paymentTypes", (HhpwDbContext db) =>
+            app.MapGet("/payment-types", (HhpwDbContext db) =>
             {
                 return Results.Ok(db.PaymentTypes.ToList());
             });

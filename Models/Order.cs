@@ -9,7 +9,7 @@ namespace HHPWServer.Models
         public string? Email { get; set; }
         public string? OrderType { get; set; }
         public bool OrderOpen { get; set; }
-        public DateTime ClosedOne { get; set; }
+        public DateTime? ClosedOn { get; set; }
         public int TipAmount { get; set; }
         public decimal OrderTotal { get; set; }
         public string? PaymentType { get; set; }

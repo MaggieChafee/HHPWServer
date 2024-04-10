@@ -3,6 +3,7 @@ using System;
 using HHPWServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HHPWServer.Migrations
 {
     [DbContext(typeof(HhpwDbContext))]
-    partial class HhpwDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240410004614_ModelsUpdate")]
+    partial class ModelsUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -89,9 +91,6 @@ namespace HHPWServer.Migrations
                     b.Property<bool>("OrderOpen")
                         .HasColumnType("boolean");
 
-                    b.Property<decimal>("OrderTotal")
-                        .HasColumnType("numeric");
-
                     b.Property<string>("OrderType")
                         .HasColumnType("text");
 
@@ -115,7 +114,6 @@ namespace HHPWServer.Migrations
                             Email = "le@gmail.com",
                             Name = "Laura Epling",
                             OrderOpen = true,
-                            OrderTotal = 0m,
                             PhoneNumber = "615-555-5555",
                             TipAmount = 0
                         },
@@ -125,7 +123,6 @@ namespace HHPWServer.Migrations
                             Email = "mm@gmail.com",
                             Name = "Micaela Miller",
                             OrderOpen = true,
-                            OrderTotal = 0m,
                             PhoneNumber = "615-555-5555",
                             TipAmount = 0
                         },
@@ -135,7 +132,6 @@ namespace HHPWServer.Migrations
                             Email = "nl@gmail.com",
                             Name = "Nik Lizcano",
                             OrderOpen = false,
-                            OrderTotal = 0m,
                             PhoneNumber = "615-555-5555",
                             TipAmount = 0
                         },
@@ -145,7 +141,6 @@ namespace HHPWServer.Migrations
                             Email = "jp@gmail.com",
                             Name = "Jason Peterson",
                             OrderOpen = true,
-                            OrderTotal = 0m,
                             PhoneNumber = "615-555-5555",
                             TipAmount = 0
                         });
@@ -297,13 +292,13 @@ namespace HHPWServer.Migrations
             modelBuilder.Entity("HHPWServer.Models.OrderItem", b =>
                 {
                     b.HasOne("HHPWServer.Models.Item", "Item")
-                        .WithMany()
+                        .WithMany("Orders")
                         .HasForeignKey("ItemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("HHPWServer.Models.Order", "Order")
-                        .WithMany()
+                        .WithMany("Items")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -311,6 +306,16 @@ namespace HHPWServer.Migrations
                     b.Navigation("Item");
 
                     b.Navigation("Order");
+                });
+
+            modelBuilder.Entity("HHPWServer.Models.Item", b =>
+                {
+                    b.Navigation("Orders");
+                });
+
+            modelBuilder.Entity("HHPWServer.Models.Order", b =>
+                {
+                    b.Navigation("Items");
                 });
 #pragma warning restore 612, 618
         }
