@@ -1,5 +1,6 @@
 ﻿using HHPWServer.Models;
 using Microsoft.AspNetCore.Mvc.Routing;
+using Microsoft.EntityFrameworkCore;
 
 namespace HHPWServer.Controllers
 {
@@ -10,7 +11,7 @@ namespace HHPWServer.Controllers
             // get all items
             app.MapGet("/items", (HhpwDbContext db) =>
             {
-                var allItems = db.OrderItems.ToList();
+                var allItems = db.Items.OrderBy(x => x.ItemName).ToList();
                 if (allItems == null)
                 {
                     return Results.Empty;
@@ -23,7 +24,12 @@ namespace HHPWServer.Controllers
             {
                 var orderItems = db.OrderItems
                     .Where(x => x.OrderId == orderId)
-                    .Select(x => x.Item)
+                    .Select(x => new
+                    {
+                        x.Id,
+                        x.Item,
+                        x.Notes,
+                    })
                     .ToList();
                 
                 if (orderItems == null)
@@ -45,9 +51,9 @@ namespace HHPWServer.Controllers
                 return Results.Ok("Item successfully added to Order.");
             });
             // delete item from order
-            app.MapDelete("/orders/{orderId}/delete-item/{itemId}", (HhpwDbContext db, int itemId, int orderId) =>
+            app.MapDelete("/orders/delete-item/{orderItemId}", (HhpwDbContext db, int orderItemId) =>
             {
-                var orderItemToDelete = db.OrderItems.FirstOrDefault(x => x.OrderId == orderId && x.ItemId == itemId );
+                var orderItemToDelete = db.OrderItems.FirstOrDefault(x => x.Id == orderItemId );
                 if (orderItemToDelete == null) 
                 {
                     return Results.NotFound();

@@ -56,7 +56,7 @@ namespace HHPWServer
 
             modelBuilder.Entity<OrderItem>().HasData(new OrderItem[]
             {
-                new OrderItem { Id = 1, OrderId = 1, ItemId = 1},
+                new OrderItem { Id = 1, OrderId = 1, ItemId = 1, Notes = "Extra Cheese"},
                 new OrderItem { Id = 2, OrderId = 1, ItemId = 2},
                 new OrderItem { Id = 3, OrderId = 2, ItemId = 3}
             });

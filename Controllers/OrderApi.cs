@@ -104,11 +104,7 @@ namespace HHPWServer.Controllers
                 var items = db.OrderItems
                     .Where(x => x.OrderId == orderId)
                     .Sum(x => x.Item.ItemPrice);
-             
-                if (items == 0)
-                {
-                    return Results.BadRequest();
-                }
+
                 return Results.Ok(items);
             });   
         }
