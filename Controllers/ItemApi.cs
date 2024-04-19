@@ -1,4 +1,5 @@
-﻿using HHPWServer.Models;
+﻿using System.Reflection.PortableExecutable;
+using HHPWServer.Models;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.EntityFrameworkCore;
 
@@ -62,6 +63,31 @@ namespace HHPWServer.Controllers
                 db.SaveChanges();
                 return Results.Ok("Item deleted");
             });
+            app.MapGet("/order-items/{id}", (HhpwDbContext db, int id) =>
+            {
+                var singleOrderItem = db.OrderItems.FirstOrDefault(o => o.Id == id);
+                if (singleOrderItem == null)
+                {
+                    return Results.NotFound();
+                }
+                return Results.Ok(singleOrderItem);
+
+            });
+            // edit orderItem
+            app.MapPut("/order-item/edit/{orderItemId}", (HhpwDbContext db, OrderItem orderItem, int orderItemId) =>
+            {
+                var orderItemToEdit = db.OrderItems.FirstOrDefault(x => x.Id == orderItemId);
+                if (orderItemToEdit == null)
+                {
+                    return Results.NotFound();
+                }
+
+                orderItemToEdit.Notes = orderItem.Notes;
+
+                db.SaveChanges();
+                return Results.NoContent();
+            });
+            
         }
     }
 }

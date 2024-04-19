@@ -11,11 +11,12 @@ namespace HHPWServer.Controllers
             // all orders
             app.MapGet("/orders", (HhpwDbContext db) =>
             {
+                var allOrders = db.Orders.OrderBy(x => x.OrderOpen == false).ThenBy(x => x.Name).ToList();
                 if (db.Orders == null)
                 {
                     return Results.BadRequest();
                 }
-                return Results.Ok(db.Orders);
+                return Results.Ok(allOrders);
             });
             // single order
             app.MapGet("/orders/{id}", (HhpwDbContext db, int id) =>
