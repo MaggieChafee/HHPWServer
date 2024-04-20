@@ -11,11 +11,12 @@ namespace HHPWServer.Controllers
             // all orders
             app.MapGet("/orders", (HhpwDbContext db) =>
             {
+                var allOrders = db.Orders.OrderBy(x => x.OrderOpen == false).ThenBy(x => x.Name).ToList();
                 if (db.Orders == null)
                 {
                     return Results.BadRequest();
                 }
-                return Results.Ok(db.Orders);
+                return Results.Ok(allOrders);
             });
             // single order
             app.MapGet("/orders/{id}", (HhpwDbContext db, int id) =>
@@ -104,11 +105,7 @@ namespace HHPWServer.Controllers
                 var items = db.OrderItems
                     .Where(x => x.OrderId == orderId)
                     .Sum(x => x.Item.ItemPrice);
-             
-                if (items == 0)
-                {
-                    return Results.BadRequest();
-                }
+
                 return Results.Ok(items);
             });   
         }

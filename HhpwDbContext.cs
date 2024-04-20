@@ -20,10 +20,10 @@ namespace HHPWServer
         {
             modelBuilder.Entity<Item>().HasData(new Item[] 
             { 
-                new Item { Id = 1, ItemName = "Cheese Pizza", ItemPrice = 18.00M  },
-                new Item { Id = 2, ItemName = "Pepeproni Pizza", ItemPrice = 20.00M },
-                new Item { Id = 3, ItemName = "Buffalo Style Wings", ItemPrice = 15.00M },
-                new Item { Id = 4, ItemName = "Garlic Knots", ItemPrice = 10.00M }
+                new Item { Id = 1, ItemName = "Margherita Pizza", ItemPrice = 18.00M, ItemPicture = "https://images.unsplash.com/photo-1627626775846-122b778965ae?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+                new Item { Id = 2, ItemName = "Pepeproni Pizza", ItemPrice = 20.00M, ItemPicture = "https://images.unsplash.com/photo-1609795829951-325b91a41471?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+                new Item { Id = 3, ItemName = "Buffalo Style Wings", ItemPrice = 15.00M, ItemPicture = "https://images.unsplash.com/photo-1567620832903-9fc6debc209f?q=80&w=1980&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+                new Item { Id = 4, ItemName = "Garlic Knots", ItemPrice = 10.00M, ItemPicture = "https://sugarspunrun.com/wp-content/uploads/2023/01/garlic-knots-recipe-1-of-1.jpg" }
             });
 
             modelBuilder.Entity<User>().HasData(new User[]
@@ -56,7 +56,7 @@ namespace HHPWServer
 
             modelBuilder.Entity<OrderItem>().HasData(new OrderItem[]
             {
-                new OrderItem { Id = 1, OrderId = 1, ItemId = 1},
+                new OrderItem { Id = 1, OrderId = 1, ItemId = 1, Notes = "Extra Cheese"},
                 new OrderItem { Id = 2, OrderId = 1, ItemId = 2},
                 new OrderItem { Id = 3, OrderId = 2, ItemId = 3}
             });

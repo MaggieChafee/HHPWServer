@@ -6,9 +6,9 @@ namespace HHPWServer.Controllers
     {
         public static void Map(WebApplication app)
         {
-            app.MapGet("/users/{id}", (HhpwDbContext db, int id) =>
+            app.MapGet("/checkuser/{uid}", (HhpwDbContext db, string uid) =>
             {
-                User user = db.Users.FirstOrDefault(x => x.Id == id);
+                User user = db.Users.FirstOrDefault(x => x.Uid == uid);
                 if (user == null)
                 {
                     return Results.BadRequest("Does not exist.");
