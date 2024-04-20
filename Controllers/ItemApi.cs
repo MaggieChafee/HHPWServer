@@ -63,16 +63,6 @@ namespace HHPWServer.Controllers
                 db.SaveChanges();
                 return Results.Ok("Item deleted");
             });
-            app.MapGet("/order-items/{id}", (HhpwDbContext db, int id) =>
-            {
-                var singleOrderItem = db.OrderItems.FirstOrDefault(o => o.Id == id);
-                if (singleOrderItem == null)
-                {
-                    return Results.NotFound();
-                }
-                return Results.Ok(singleOrderItem);
-
-            });
             // edit orderItem
             app.MapPut("/order-item/edit/{orderItemId}", (HhpwDbContext db, OrderItem orderItem, int orderItemId) =>
             {
